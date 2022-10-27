@@ -1,0 +1,107 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+<meta charset="UTF-8">
+<p>상품관리 페이지</p>
+<%
+	ArrayList<productDataLoad> list = (ArrayList<productDataLoad>)request.getAttribute("list");
+	int ea = list.size();
+	int tot = (int)request.getAttribute("total");
+	String s = (String)request.getAttribute("search");
+	String sel = (String)request.getAttribute("sel");
+	if(s==null || s=="null" || s==""){
+		s = "";
+		sel="";
+	}
+%>
+
+<div class="subpage_view">
+    <span>등록된 상품 <%=tot %>건</span>
+    <span>
+        <form name="frm" onsubmit="return searchSubmit();">
+        <select class="p_select1" name="sel">
+            <option value="prnm">상품명</option>
+            <option value="prcode" <%if(sel.equals("prcode"))out.print("selected");%>>상품코드</option>
+        </select>
+        <input type="text" class="p_input1" name="searchinput" placeholder="검색어를 입력해 주세요" value="<%=s%>">
+        <input type="submit" value="검색" title="상품검색" class="p_submit">
+        </form>
+    </span>
+</div>
+<div class="subpage_view2">
+    <ul>
+        <li><input type="checkbox" id="allcheck" onclick="checkAll(<%=ea%>)"></li>
+        <li>코드</li>
+        <li>이미지</li>
+        <li>상품명</li>
+        <li>카테고리 분류</li>
+        <li>판매가격</li>
+        <li>할인가격</li>
+        <li>할인율</li>
+        <li>재고현황</li>
+        <li>판매유/무</li>
+        <li>품절</li>
+        <li>관리</li>
+    </ul>
+<%
+	if(list.size()==0 || list==null){
+%>
+    <ul>
+        <li style="width: 100%;">등록된 상품이 없습니다.</li>
+    </ul>
+<%
+	}else{
+		for(productDataLoad pdl : list){
+		String img_url = pdl.getPrimg1().replace("./","http://jwe06120.cafe24.com/");
+%>
+    <ul>
+        <li><input type="checkbox" id="ckbox" name="ck" value="<%=pdl.getPridx()%>"></li>
+        <li><%=pdl.getProductcode() %></li>
+        <!-- <li>이미지</li>-->
+        <!-- http://jwe06120.cafe24.com/portfolio3/upload/login.png -->
+        <!-- /jwe06120/tomcat/webapps/portfolio3/upload/login.png -->
+        <!--  <li><img src="<%=pdl.getPrimg1() %>" style="height: 30px"></li>-->
+        <li><img src="<%=img_url %>" style="height: 30px"></li>
+        <li><%=pdl.getPrnm() %></li>
+        <li><%=pdl.getB_prcatecode() %><%=pdl.getS_prcatecode() %></li>
+        <li><fmt:formatNumber value="<%=pdl.getPrprice() %>" groupingUsed="true" /></li>
+        <li><fmt:formatNumber value="<%=pdl.getPrdcprice() %>" groupingUsed="true" /></li>
+        <li><%=pdl.getPrdcpercent() %>%</li>
+        <li><%=pdl.getPrstock() %></li>
+        <li><%=pdl.getUsesell() %></li>
+        <li><%=pdl.getUsesoldout() %></li>
+        <li>관리</li>
+    </ul>
+<%
+		}
+	}
+%>   
+</div>
+<!-- 검색 쿼리 있을 경우 페이지 번호 쿼리도 붙여서 다시 검색해야되는거로 수정 필요.. -->
+<div class="subpage_view3">
+<%
+	int p = 1;
+	int pn = (int)request.getAttribute("pagenumber");
+%>
+    <ul class="pageing">
+        <li onclick="pagemove(1,<%=pn%>,1)"><img src="./ico/double_left.svg"></li>
+        <li onclick="pagemove(1,<%=pn%>,2)" id="pre"><img src="./ico/left.svg"></li>
+<%
+	while(p<=pn){
+%>
+        <li onclick="pagemove(<%=p%>,<%=pn%>,1)"><%=p %></li>
+<%
+	p++;
+	}
+%>
+        <li onclick="pagemove(1,<%=pn%>,3)" id="nxt"><img src="./ico/right.svg"></li>
+        <li onclick="pagemove(<%=pn%>,<%=pn%>,1)"><img src="./ico/double_right.svg"></li>
+    </ul>
+</div>
+<div class="subpage_view4">
+    <input type="button" value="선택상품 삭제" title="선택상품 삭제" class="p_button" onclick="deleteProduct(<%=ea%>)">
+    <span style="float: right;">
+    <input type="button" value="신규상품 등록" title="신규상품 등록" class="p_button p_button_color1" onclick="location.href = './admin_product_write.jsp';">
+    <input type="button" value="카테고리 등록" title="카테고리 등록" class="p_button p_button_color2" onclick="location.href = './cateWriteList.do';">
+    </span>
+</div>

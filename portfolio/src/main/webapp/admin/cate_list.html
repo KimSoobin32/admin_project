@@ -1,0 +1,101 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+<meta charset="UTF-8">
+<p>카테고리관리 페이지</p>
+<%
+	ArrayList<categoryDataLoad> list = (ArrayList<categoryDataLoad>)request.getAttribute("list");
+	int ea = list.size();
+	int tot = (int)request.getAttribute("total");
+	String s = (String)request.getAttribute("search");
+	String sel = (String)request.getAttribute("sel");
+	if(s==null || s=="null" || s==""){
+		s = "";
+		sel="";
+	}
+%>
+<div class="subpage_view">
+    <span>등록된 카테고리 <%=tot %>건</span>
+    <span>
+        <form name ="frm" onsubmit="return searchSubmit();">
+        <select class="p_select1" name="sel">
+            <option value="catenm">카테고리명</option>
+            <option value="catecode" <%if(sel.equals("catecode"))out.print("selected");%>>카테고리코드</option>
+        </select>
+        <input type="text" class="p_input1" name="search" placeholder="검색어를 입력해 주세요" value="<%=s %>">
+        <input type="submit" value="검색" title="카테고리 검색" class="p_submit">
+        </form>
+    </span>
+</div>
+
+<div class="subpage_view2">
+    <ul>
+        <li><input type="checkbox" id = "allcheck" onclick="checkAll(<%=ea%>)"></li>
+        <li>분류코드</li>
+        <li>대메뉴 코드</li>
+        <li>대메뉴명</li>
+        <li>소메뉴 코드</li>
+        <li>소메뉴명</li>
+        <li>사용 유/무</li>
+        <li>관리</li>
+    </ul>
+<%
+	if(list.size()==0 || list==null){
+%>
+    <ul>
+        <li style="width: 100%;">등록된 카테고리가 없습니다.</li>
+    </ul>
+<%
+	}else{
+		
+		
+		
+		for(categoryDataLoad cdl : list){
+		
+		
+		
+		
+%>
+    <ul>
+        <li><input type="checkbox" id="ckbox" name="ck" value="<%=cdl.getCategorycode() %>"></li>
+        <li style="text-align: left; text-indent: 5px;"><%=cdl.getCategorycode() %></li>
+        <li><%=cdl.getB_catecode() %></li>
+        <li style="text-align: left; text-indent: 5px;"><%=cdl.getB_catenm() %></li>
+        <li><%=cdl.getS_catecode() %></li>
+        <li style="text-align: left; text-indent: 5px;"><%=cdl.getS_catenm() %></li>
+        <li><%=cdl.getUsecate() %></li>
+        <li>[수정]</li>
+    </ul>
+<%
+		}
+	}
+%>
+</div>
+<div class="subpage_view3">
+<%
+	int p =1;
+	int pn = (int)request.getAttribute("pagenumber");
+	
+%>
+    <ul class="pageing">
+        <li onclick="pagemove(1,<%=pn%>,1)"><img src="./ico/double_left.svg"></li>
+        <li onclick="pagemove(1,<%=pn%>,2)" id="pre"><img src="./ico/left.svg"></li>
+<%
+	while(p<=pn){
+%>
+        <li onclick="pagemove(<%=p%>,<%=pn%>,1)"><%=p %></li>
+<%
+	p++;
+	}
+%>
+        <li onclick="pagemove(1,<%=pn%>,3)" id="nxt"><img src="./ico/right.svg"></li>
+        <li onclick="pagemove(<%=pn%>,<%=pn%>,1)"><img src="./ico/double_right.svg"></li>
+    </ul>
+</div>
+<div class="subpage_view4">
+    <input type="button" value="카테고리 삭제" title="카테고리 삭제" class="p_button" onclick="deleteCategory(<%=ea%>)">
+    <span style="float: right;">
+    <input type="button" value="상품 리스트" title="상품 리스트" class="p_button p_button_color1" onclick="location.href = './product_list.do';">
+    <input type="button" value="카테고리 등록" title="카테고리 등록" class="p_button p_button_color2" onclick="location.href = './cateWriteList.do';">
+    </span>
+</div>

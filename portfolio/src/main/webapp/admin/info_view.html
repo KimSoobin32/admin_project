@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+
+<div class="admin_login_add">
+    <ul>
+        <li class="font_color1">관리자 정보 수정</li>
+        <li>
+        <input type="text" class="add_input1" value="<%= aid %>" name="aid" readonly><!-- 아이디 -->
+        </li>
+        <li>
+            <input type="password" class="add_input1" id="apw" name="apw" placeholder="변경할 패스워드를 입력하세요">
+            <input type="password" class="add_input1" id="apw_confirm" placeholder="동일한 패스워드를 입력하세요">
+        </li>
+        <li class="font_color1">관리자 기본정보 입력</li>
+        <li>
+            <input type="text" class="add_input1" id="aname" name="aname" value="<%= aname %>"><!-- 이름 -->
+        </li>
+        <li>
+        <input type="text" class="add_input1 emails" id="aemail" name="aemail" value="<%= aemail %>"><!-- 이메일 -->
+        </li>
+        <li class="font_color1">
+        <input type="text" class="add_input1 hp1" name="atel1" maxlength="3" id="atel1">
+        -
+        <input type="text" class="add_input1 hp2" name="atel2" maxlength="4" id="atel2">
+        -
+        <input type="text" class="add_input1 hp2" name="atel3" maxlength="4" id="atel3">
+        </li>
+        <li class="font_color1">관리자 담당부서 및 직책</li>
+        <li>
+            <select class="add_select1" name="apart" id="apart">
+                <option value="">담당자 부서를 선택하세요</option>
+                <option value="1" <%if(apart.equals("1"))out.print("selected");%>>임원</option>
+                <option value="2" <%if(apart.equals("2"))out.print("selected");%>>전산팀</option>
+                <option value="3" <%if(apart.equals("3"))out.print("selected");%>>디자인팀</option>
+                <option value="4" <%if(apart.equals("4"))out.print("selected");%>>CS팀</option>
+                <option value="5" <%if(apart.equals("5"))out.print("selected");%>>MD팀</option>
+            </select>
+            <select class="add_select1" name="aposition" id="aposition">
+                <option value="">담당자 직책을 선택하세요</option>
+                <option value="1" <%if(aposition.equals("1"))out.print("selected");%>>대표</option>
+                <option value="2" <%if(aposition.equals("2"))out.print("selected");%>>부장</option>
+                <option value="3" <%if(aposition.equals("3"))out.print("selected");%>>팀장</option>
+                <option value="4" <%if(aposition.equals("4"))out.print("selected");%>>과장</option>
+                <option value="5" <%if(aposition.equals("5"))out.print("selected");%>>대리</option>
+                <option value="6" <%if(aposition.equals("6"))out.print("selected");%>>사원</option>
+            </select>
+        </li>
+        <li class="font_color1">※ 아이디 외에 모든 정보는 수정 할 수 있습니다.</li>
+    </ul>
+    <span class="admin_addbtn">
+        <button type="button" class="btn_button btncolor1" title="관리자 등록" onclick="memberUpdate()">정보 수정</button>
+    </span>
+</div>
+<script>
+	var hp = "<%=atel%>"; 
+	document.getElementById("atel1").value = hp.substr(0,3);
+	document.getElementById("atel2").value = hp.substr(3,4);
+	document.getElementById("atel3").value = hp.substr(7,8);
+</script>

@@ -1,0 +1,117 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+<meta charset="UTF-8">
+<p>신규등록 관리자</p>
+<ol class="new_admin_title">
+    <li>NO</li>
+    <li>관리자명</li>
+    <li>아이디</li>
+    <li>전화번호</li>
+    <li>이메일</li>
+    <li>담당부서</li>
+    <li>담당직책</li>
+    <li>가입일자</li>
+    <li>승인여부</li>
+</ol>
+<%
+
+	ArrayList<dataLoad> list = (ArrayList<dataLoad>)request.getAttribute("list");
+
+	if(list.size()==0 || list==null){
+	
+%>
+<ol class="new_admin_none">
+    <li>신규 등록된 관리자가 없습니다.</li>
+</ol>
+<%
+	}else {
+		int w = 0;
+		int no = 0;
+		int total = list.size();
+	
+		for(dataLoad dl : list){
+			no = total - w;
+			w++;
+		
+			int partNum = Integer.parseInt(dl.getApart());
+			String part = null;
+			int positionNum = Integer.parseInt(dl.getAposition());
+			String position = dl.getAposition();
+			
+			switch(partNum){	
+			case 1:
+				part = "임원";
+				break;
+			case 2:
+				part = "전산팀";
+				break;
+			case 3:
+				part = "디자인팀";
+				break;
+			case 4:
+				part = "CS팀";
+				break;
+			case 5:
+				part = "MD팀";
+				break;
+			default:
+				part = "기타";
+				break;
+			
+			}
+			
+			switch(positionNum){	
+			case 1:
+				position = "대표";
+				break;
+			case 2:
+				position = "부장";
+				break;
+			case 3:
+				position = "팀장";
+				break;
+			case 4:
+				position = "과장";
+				break;
+			case 5:
+				position = "대리";
+				break;
+			case 6:
+				position = "사원";
+				break;
+			default:
+				position = "기타";
+				break;
+			
+			}
+	
+%>
+<!-- switch문 다른 파일로 분리 -->
+<%-- <jsp:inclde page="getSwitch.jsp">
+	<jsp:param value='<%=dl.getApart() %>' name="partNum" />
+	<jsp:param value='<%=dl.getAposition() %>' name="positionNum" />
+</jsp:inclde>--%>
+<%
+			//String part = (String)request.getAttribute("part");
+			//String position = (String)request.getAttribute("position");
+			
+%>
+<ol class="new_admin_lists">
+    <li><%=no %></li>
+    <li><%=dl.getAname() %></li>
+    <li><%=dl.getAid() %></li>
+    <li><%=dl.getAtel() %></li>
+    <li><%=dl.getAemail() %></li>
+    <li><%=part %></li>
+    <li><%=position %></li>
+    <li><%=dl.getAindate().substring(0,10) %></li>
+    <li>
+        <input type="button" value="승인" class="new_addbtn1" title="승인" onclick="updateLoginAccept('<%=dl.getAidx() %>','Y');">
+        <input type="button" value="미승인" class="new_addbtn2" title="미승인" onclick="updateLoginAccept('<%=dl.getAidx() %>','N');">
+    </li>
+</ol>
+<%
+		}
+	}
+%>

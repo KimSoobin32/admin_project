@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+<meta charset="UTF-8">
+<div class="nav_div">
+    <ol>
+        <li title="쇼핑몰 기본설정" onclick="location.href = './admin_config.jsp';">쇼핑몰 기본설정</li>
+        <li title="회원관리" onclick="disable()">회원 관리</li>
+        <li title="공지사항" onclick="location.href = './notice_list.do';">공지사항</li>
+        <li title="쇼핑몰관리" onclick="location.href = './shopping_list.do';">쇼핑몰 관리</li>
+        <li title="상품리스트" onclick="location.href = './product_list.do';">상품 리스트</li>
+        <li title="주문내역" onclick="disable()">주문 내역</li>
+        <li title="카테고리 관리" onclick="location.href = './category_list.do';">카테고리 관리</li>
+    </ol>
+</div>
+<script>
+function disable(){
+	alert("서비스 준비 중입니다.");
+}
+</script>

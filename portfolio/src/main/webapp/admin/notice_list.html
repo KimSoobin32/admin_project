@@ -1,0 +1,94 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+<meta charset="UTF-8">
+<p>공지사항 관리페이지</p>
+<div class="subpage_view">
+<%
+	ArrayList<noticeDataLoad> list = (ArrayList<noticeDataLoad>)request.getAttribute("list");
+	//ArrayList<noticeDataLoad> nlist = (ArrayList<noticeDataLoad>)request.getAttribute("nlist");
+	int ea = list.size();
+	//int nea = nlist.size();
+	
+
+	
+%>
+<ul>
+    <li><input type="checkbox" id="allcheck" onclick="checkAll(<%=ea%>)"></li>
+    <li>NO</li>
+    <li>제목</li>
+    <li>글쓴이</li>
+    <li>날짜</li>
+    <li>조회</li>
+</ul>
+
+<%
+
+	if(list.size()==0 || list==null){
+		
+%>
+<ol class="none_text">
+    <li>등록된 공지 내용이 없습니다.</li>
+</ol>
+<%
+		
+	}else{
+		int w = 0;
+		int no = 0;
+		
+		int total = (int)request.getAttribute("total");
+		int sp = (int)request.getAttribute("startpage");
+		for(noticeDataLoad ndl : list){
+		
+		//String str = (String)ndl.getUsenotice();
+		//out.print(str.replace(" ","dd"));
+		
+		no = total - sp - w;
+		w++;
+		
+%>
+<ol>
+    <li><input type="checkbox" id="ckbox" name="ck" value="<%=ndl.getNidx() %>"></li>
+    <li><%=no %></li>
+    <li onclick="location.href='./noticeView.do?nidx=<%=ndl.getNidx() %>&no=<%=no%>';" style="cursor: pointer;"><%=ndl.getNtitle() %></li>
+    <li><%=ndl.getNwriter() %></li>
+    <li><%=ndl.getNindate().substring(0,10) %></li>
+    <li><%=ndl.getViewcount() %></li>
+    
+</ol>
+<%		
+		}
+	}
+%>
+</div>
+<div class="board_btn">
+    <button class="border_del" onclick="deleteNotice(<%=ea%>)">공지삭제</button>
+    <button class="border_add" type="button" onclick="location.href='./admin_notice_write.jsp'">공지등록</button><!-- ./admin_notice_write.jsp -->
+</div>
+<%
+	int p = 1;
+
+	int pn = (int)request.getAttribute("pagenumber");
+%>
+<div class="border_page">
+    <ul class="pageing">
+        <li onclick="pagemove(1,<%=pn%>,1)"><img src="./ico/double_left.svg"></li>
+        <li onclick="pagemove(1,<%=pn%>,2)"><img src="./ico/left.svg"></li>
+		
+		
+        <% 
+        	
+        	
+        	while(p <= pn){
+        %>
+        <li onclick="pagemove(<%=p%>,<%=pn%>,1)"><%=p%></li>
+        <%
+        	
+        	p++;
+        	}
+        %>
+       
+        <li onclick="pagemove(1,<%=pn%>,3)"><img src="./ico/right.svg"></li>
+        <li onclick="pagemove(<%=pn%>,<%=pn%>,1)"><img src="./ico/double_right.svg"></li>
+    </ul>
+</div>
