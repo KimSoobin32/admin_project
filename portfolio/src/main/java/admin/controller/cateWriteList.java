@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import admin.vo.categoryDataLoad;
+import admin.model.categoryDataLoad;
 
 
 public class cateWriteList extends HttpServlet {

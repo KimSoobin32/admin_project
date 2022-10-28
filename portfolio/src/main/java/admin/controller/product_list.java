@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import admin.vo.productDataLoad;
+import admin.model.productDataLoad;
 
 
 public class product_list extends HttpServlet {

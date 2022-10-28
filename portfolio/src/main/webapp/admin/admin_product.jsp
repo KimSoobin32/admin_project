@@ -1,4 +1,4 @@
-<%@page import="admin.vo.productDataLoad"%>
+<%@page import="admin.model.productDataLoad"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

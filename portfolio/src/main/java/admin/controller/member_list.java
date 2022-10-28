@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import admin.vo.dataLoad;
+import admin.model.dataLoad;
 
 
 public class member_list extends HttpServlet {
